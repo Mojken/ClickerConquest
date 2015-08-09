@@ -8,7 +8,7 @@ Gained from killing the opponent’s creeps on the battlefield.
 
 Funding, a slow income based on multiple factors.
 
-Outcome:
+#Expense:
 Training units
 Sends units out to the Battlefield, killing opponent creeps. Each unit has a HP and are essential for survival. Each unit has different stats. The stats are: HP, Defense, Regen (?), Aggro, critical chance and Attack speed.
 
