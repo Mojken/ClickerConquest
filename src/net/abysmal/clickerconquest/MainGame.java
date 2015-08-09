@@ -2,6 +2,7 @@ package net.abysmal.clickerconquest;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -9,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 public class MainGame extends JFrame {
 
 	private JPanel contentPane;
+	static ImageIcon img = new ImageIcon("res/net/abysmal/clickerconquest/icon32.ico");
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -17,6 +19,7 @@ public class MainGame extends JFrame {
 				try{
 					MainGame frame = new MainGame();
 					frame.setVisible(true);
+					frame.setIconImage(img.getImage());
 				}catch (Exception e){
 					e.printStackTrace();
 				}
@@ -26,8 +29,7 @@ public class MainGame extends JFrame {
 
 	public MainGame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(450, 300);
-		setLocationRelativeTo(null);
+		setBounds(0, 0, 1920, 1050);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
