@@ -1,6 +1,6 @@
 # ClickerConquest
 
-Multiplayer vers. style clicker game themed around medieval warfare on a battlefield.
+##Multiplayer vers. style clicker game themed around medieval warfare on a battlefield.
 
 Income:
 Killing creeps
