@@ -14,11 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>res/net/abysmal/clickerconquest/icon.ico</name>
-			<type>1</type>
-			<location>C:/Users/Mojken/Workspace/git/ClickerConquest/res/net/abysmal/clickerconquest/icon.ico</location>
-		</link>
-	</linkedResources>
 </projectDescription>
