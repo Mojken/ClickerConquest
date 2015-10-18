@@ -26,8 +26,4 @@ public class Menu extends Window {
 	}
 
 	public static void initializeButtons() {}
-
-	public static void createButton(int ID, int x, int y, int width, int height, String text, int screen) {
-		buttons[ID] = new Button(ID, x, y, width, height, text, screen);
-	}
 }

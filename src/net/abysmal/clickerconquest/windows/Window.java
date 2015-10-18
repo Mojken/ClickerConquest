@@ -14,9 +14,8 @@ public class Window extends JFrame {
 
 	public static int width, height, scale;
 
-	static int	ID;
-	protected Panel		p;
-
+	static int ID;
+	protected Panel p;
 	protected ButtonHandler BH;
 
 	public Window() {
@@ -29,5 +28,9 @@ public class Window extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setTitle("Clicker Conquest");
+	}
+	
+	public static void createButton(int ID, int x, int y, int width, int height, String text, int screen) {
+		buttons[ID] = new Button(ID, x, y, width, height, text, screen);
 	}
 }

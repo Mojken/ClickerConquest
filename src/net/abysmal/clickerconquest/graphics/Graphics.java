@@ -12,18 +12,19 @@ public class Graphics {
 	static Image button = Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/net/abysmal/clickerconquest/button.png"));
 	static Image BG = Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/net/abysmal/clickerconquest/wood-texture.jpg"));
 	static Image title = Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/net/abysmal/clickerconquest/Title.png"));
-	
+
 	public static void drawBackground(Graphics2D g, int width, int height) {
 		g.drawImage(BG, 0, 0, width, height, null);
 	}
-	
-	public static void drawTitle(Graphics2D g,int x, int y, int width, int height) {
+
+	public static void drawTitle(Graphics2D g, int x, int y, int width, int height) {
 		g.drawImage(title, x, y, width, height, null);
 	}
-	
-	public static void drawButton(Graphics2D g, int m, int x, int y, int width, int height, String text) {
+
+	public static void drawButton(Graphics2D g, int m, int x, int y, int width, int height, String text, int fontSize) {
+		fontSize = 60;
 		drawTile(g, button, m, x, y, x + width, y + height);
-		drawText(g, 1, true, "Blackadder ITC", 60, x, y, width, height, text);
+		drawText(g, 1, true, "Blackadder ITC", fontSize, x, y, width, height, text);
 	}
 
 	public static void drawText(Graphics2D g, int style, boolean centered, String font, int fontSize, int x1, int y1, int width, int height, String text) {
@@ -33,7 +34,7 @@ public class Graphics {
 		if (centered) {
 			int strWidth = g.getFontMetrics().stringWidth(text);
 			g.drawChars(text.toCharArray(), 0, text.length(), x1 + width / 2 - strWidth / 2, y1 + height / 2 + fontSize / 3);
-		}else{
+		} else {
 			g.drawChars(text.toCharArray(), 0, text.length(), x1, y1); // drawText(G, 0, false, "Arial", 30, 10, 10, 0, 0, text);
 		}
 	}

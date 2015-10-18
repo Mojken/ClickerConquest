@@ -23,6 +23,7 @@ public class Main implements Runnable {
 	public void run() {
 		while (running){
 			menu.repaint();
+			
 			try{
 				Thread.sleep(20);
 			}catch (Exception e){

@@ -2,8 +2,8 @@ package net.abysmal.clickerconquest.utils;
 
 public class Button {
 
-	private int		ID, m, x, y, width, height, screen;
-	private String	text;
+	private int ID, m, x, y, width, height, screen;
+	private String text;
 
 	public Button(int ID, int x, int y, int width, int height, String text, int screen) {
 		this.ID = ID;
@@ -35,11 +35,11 @@ public class Button {
 	public int getId() {
 		return ID;
 	}
-	
+
 	public int getMargin() {
 		return m;
 	}
-	
+
 	public int getScreen() {
 		return screen;
 	}
