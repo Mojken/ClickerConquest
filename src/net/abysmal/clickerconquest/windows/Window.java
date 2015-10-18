@@ -30,7 +30,7 @@ public class Window extends JFrame {
 		setTitle("Clicker Conquest");
 	}
 	
-	public static void createButton(int ID, int x, int y, int width, int height, String text, int screen) {
-		buttons[ID] = new Button(ID, x, y, width, height, text, screen);
+	public static void createButton(int ID, int x, int y, int width, int height, String text, int screen, int fontSize) {
+		buttons[ID] = new Button(ID, x, y, width, height, text, screen, fontSize);
 	}
 }

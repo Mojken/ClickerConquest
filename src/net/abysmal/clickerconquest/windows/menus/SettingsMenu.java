@@ -17,14 +17,15 @@ public class SettingsMenu extends Menu {
 			int BID = 4;									// button ID
 			int BO = 10;									// button offset
 			int BH = ((height - (h + (m * 2))) / BID) - s; 	// button height
+			int fontSize = 60;
 			BID--;
-			createButton(BID + BO, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Back", ID);
+			createButton(BID + BO, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Back", ID, fontSize);
 			BID--;
-			createButton(BID + BO, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Something", ID);
+			createButton(BID + BO, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Something", ID, fontSize);
 			BID--;
-			createButton(BID + BO, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Something", ID);
+			createButton(BID + BO, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Something", ID, fontSize);
 			BID--;
-			createButton(BID + BO, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Something", ID);
+			createButton(BID + BO, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Something", ID, fontSize);
 			inizialized = true;
 		}
 	}

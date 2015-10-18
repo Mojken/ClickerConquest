@@ -16,14 +16,15 @@ public class StartMenu extends Menu {
 			int m = 30;										// margin
 			int BID = 4;									// button ID
 			int BH = ((height - (h + (m * 2))) / BID) - s; 	// button height
+			int fontSize = 60;
 			BID--;
-			createButton(BID, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Quit", ID);
+			createButton(BID, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Quit", ID, fontSize);
 			BID--;
-			createButton(BID, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Settings", ID);
+			createButton(BID, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Settings", ID, fontSize);
 			BID--;
-			createButton(BID, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Multiplayer", ID);
+			createButton(BID, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Multiplayer", ID, fontSize);
 			BID--;
-			createButton(BID, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Singleplayer", ID);
+			createButton(BID, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Singleplayer", ID, fontSize);
 			inizialized = true;
 		}
 	}

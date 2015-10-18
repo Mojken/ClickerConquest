@@ -17,12 +17,13 @@ public class SingleplayerMenu extends Menu {
 			int BID = 3;									// button ID
 			int BO = 4;										// button offset
 			int BH = ((height - (h + (m * 2))) / BID) - s; 	// button height
+			int fontSize = 60;
 			BID--;
-			createButton(BID + BO, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Back", ID);
+			createButton(BID + BO, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Back", ID, fontSize);
 			BID--;
-			createButton(BID + BO, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "New Game", ID);
+			createButton(BID + BO, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "New Game", ID, fontSize);
 			BID--;
-			createButton(BID + BO, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Continiue", ID);
+			createButton(BID + BO, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Continiue", ID, fontSize);
 			inizialized = true;
 		}
 	}

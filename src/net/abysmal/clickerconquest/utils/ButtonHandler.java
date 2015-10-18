@@ -35,6 +35,8 @@ public class ButtonHandler implements MouseListener {
 			break;
 			case 4:
 				GameWindow.initializeWindow(4);
+				Panel.currentScreen = 4;
+				window.dispose();
 			break;
 			case 5:
 				System.out.println(ID + ": New Game (" + window.buttons[ID].getScreen() + ")");

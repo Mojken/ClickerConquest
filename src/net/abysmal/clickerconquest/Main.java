@@ -1,13 +1,15 @@
 package net.abysmal.clickerconquest;
 
+import net.abysmal.clickerconquest.graphics.Panel;
+import net.abysmal.clickerconquest.windows.GameWindow;
 import net.abysmal.clickerconquest.windows.Window;
 import net.abysmal.clickerconquest.windows.menus.Menu;
 
 public class Main implements Runnable {
 
-	Window	menu;
-	Thread	t;
-	boolean	running	= false;
+	Window menu;
+	Thread t;
+	boolean running = false;
 
 	public static void main(String[] args) {
 		new Main();
@@ -21,12 +23,12 @@ public class Main implements Runnable {
 	}
 
 	public void run() {
-		while (running){
+		while (running) {
 			menu.repaint();
-			
-			try{
+			if (Panel.currentScreen == 4) GameWindow.window.repaint();
+			try {
 				Thread.sleep(20);
-			}catch (Exception e){
+			} catch (Exception e) {
 			}
 		}
 	}
