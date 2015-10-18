@@ -50,8 +50,8 @@ public class GameWindow extends Window {
 			createButton(BID + BO, 0, (int) (height / 6.75) + BH, (width / 5), BH, "Siege", ID, fontSize);
 			BID--;
 			createButton(BID + BO, (width / 5), (int) (height / 6.75) + BH, (width / 5), BH, "Special", ID, fontSize);
-			Healthbar MyHealth = new Healthbar((width / 5) * 2, 0, (int) (width - ((width / 5) * 2 + ((height / 6.75)) * 1.185185)), (int) ((height / 6.75) / 4), 900, false);
-			Healthbar TheirHealth = new Healthbar((width / 5) * 2, (int) ((height / 6.75) / 4), (int) (width - ((width / 5) * 2 + ((height / 6.75)) * 1.185185)), (int) ((height / 6.75) / 4), 500, true);
+			Healthbar MyHealth = new Healthbar((width / 5) * 2, 0, (int) (width - ((width / 5) * 2 + ((height / 6.75)) * 1.185185)), (int) ((height / 6.75) / 4), 100, false);
+			Healthbar TheirHealth = new Healthbar((width / 5) * 2, (int) ((height / 6.75) / 4), (int) (width - ((width / 5) * 2 + ((height / 6.75)) * 1.185185)), (int) ((height / 6.75) / 4), 100, true);
 			healthbars[0] = MyHealth;
 			healthbars[1] = TheirHealth;
 			inizialized = true;

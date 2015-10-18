@@ -45,23 +45,38 @@ DPS, the total damage currently being dealt per second by your units. Lowers opp
 
 ###Idols:
 
-\#	Name:		Effect:
+\#	Name:				Effect:
 1	Corinthians			Lowers the cost of units to train.
+
 2	Rán					Increases money yealed from killing creeps.
+
 1	Clementia			Decreases Karma loss
+
 1	Eucleia				Increases Karma gain
+
 2	Lofn				Decreased Karma's bad influences		}
+
 2	Ullr				Increases Karma's good influences		} - Could be separate Idols for each influence, or one for everything
+
 3	Houyi				Increases ranged damage
+
 2	Gersemi				Increases starter gold					- Could potentially ruin everything if this gets too serious, although, you can always click. Needs to stay rather insignificant either way
+
 3	Caishen				Increases Funding
+
 3	Hachiman			Increases each unit's DPS
+
 1	Nemesis				Adds a base DPS - unrelated to units	- Ought to stay low, could ruin early-game. OR, we let these two remain, and just call people who don't get them Noobs, as they would fail miserably.
+
 2	Hlín				Decreases damage taken					- Does not apply to units
+
 3	Jurojin				Increases AP gain
 						
+
 1	Greek Mythology: 4
+
 2	Norse Mythology: 5
+
 3	Chinese Folklore and Shinto: 4
 	
 ###Units:
