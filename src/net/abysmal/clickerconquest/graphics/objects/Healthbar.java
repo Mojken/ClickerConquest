@@ -14,6 +14,8 @@ public class Healthbar {
 		this.health = health;
 		this.enemy = enemy;
 		currentHealth = health;
+		
+		while (true) if (currentHealth < 0) currentHealth = 0;
 	}
 
 	public int getX() {

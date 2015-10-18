@@ -39,6 +39,7 @@ public class ButtonHandler implements MouseListener {
 				window.dispose();
 			break;
 			case 5:
+				
 				System.out.println(ID + ": New Game (" + window.buttons[ID].getScreen() + ")");
 			break;
 			case 6:

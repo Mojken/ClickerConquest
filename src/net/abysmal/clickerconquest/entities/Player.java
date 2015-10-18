@@ -2,10 +2,27 @@ package net.abysmal.clickerconquest.entities;
 
 public class Player extends Entity {
 
-	double money, karma;
-	int health, AP, APGain, DPS, HP, clickDamage, funding;
+	String Username;
+	double money = 100.0;
+	double karma = 0.0;
+	int health = 10000;
+	int AP = 0;
+	int APGain = 0;
+	int DPS = 0;
+	int HP = 0;
+	int clickDamage = 2;
+	int funding = 10;
+	int idolCount = 0;
 	Unit[] units = new Unit[4096];
 	Idol[] idols = new Idol[13];
+
+	public Player(String Username) {
+		if (health <= 0) System.out.println(Username + " is dead!");
+	}
+
+	public void damage(int damage) {
+		if (health > 0) health -= damage;
+	}
 
 	public Idol[] getIdols() {
 		return idols;
@@ -14,8 +31,6 @@ public class Player extends Entity {
 	public void setIdols(Idol[] idols) {
 		this.idols = idols;
 	}
-
-	public Player() {}
 
 	public double getMoney() {
 		return money;
