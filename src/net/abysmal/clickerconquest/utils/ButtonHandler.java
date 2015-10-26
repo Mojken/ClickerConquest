@@ -2,84 +2,71 @@ package net.abysmal.clickerconquest.utils;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import net.abysmal.clickerconquest.Main;
 import net.abysmal.clickerconquest.graphics.Panel;
-import net.abysmal.clickerconquest.windows.GameWindow;
-import net.abysmal.clickerconquest.windows.Window;
-import net.abysmal.clickerconquest.windows.menus.Menu;
-import net.abysmal.clickerconquest.windows.menus.MultiplayerMenu;
-import net.abysmal.clickerconquest.windows.menus.SettingsMenu;
-import net.abysmal.clickerconquest.windows.menus.SingleplayerMenu;
 
 public class ButtonHandler implements MouseListener {
 
-	Window window;
+	Panel panel;
 
-	@SuppressWarnings("static-access")
 	public void ButtonPress(int ID) {
 		switch (ID) {
 			case 0:
-				Panel.currentScreen = 1;
-				SingleplayerMenu.initializeButtons();
+				Main.switchContentPane(1);
 			break;
 			case 1:
-				Panel.currentScreen = 2;
-				MultiplayerMenu.initializeButtons();
+				Main.switchContentPane(2);
 			break;
 			case 2:
-				Panel.currentScreen = 3;
-				SettingsMenu.initializeButtons();
+				Main.switchContentPane(3);
 			break;
 			case 3:
 				System.out.println("Kbye");
 				System.exit(0);
 			break;
 			case 4:
-				GameWindow.initializeWindow(4);
-				Panel.currentScreen = 4;
-				window.dispose();
+				Main.switchContentPane(4);
 			break;
 			case 5:
-				
-				System.out.println(ID + ": New Game (" + window.buttons[ID].getScreen() + ")");
+				System.out.println(ID + ": New Game (" + Panel.buttons[ID].getScreen() + ")");
 			break;
 			case 6:
-				Panel.currentScreen = 0;
+				Main.switchContentPane(0);
 			break;
 			case 8:
-				System.out.println(ID + ": Join (" + window.buttons[ID].getScreen() + ")");
+				System.out.println(ID + ": Join (" + Panel.buttons[ID].getScreen() + ")");
 			break;
 			case 9:
-				Panel.currentScreen = 0;
+				Main.switchContentPane(0);
 			break;
 			case 10:
-				System.out.println(ID + ": Something (" + window.buttons[ID].getScreen() + ")");
+				System.out.println(ID + ": Something (" + Panel.buttons[ID].getScreen() + ")");
 			break;
 			case 11:
-				System.out.println(ID + ": Something (" + window.buttons[ID].getScreen() + ")");
+				System.out.println(ID + ": Something (" + Panel.buttons[ID].getScreen() + ")");
 			break;
 			case 12:
-				System.out.println(ID + ": Something (" + window.buttons[ID].getScreen() + ")");
+				System.out.println(ID + ": Something (" + Panel.buttons[ID].getScreen() + ")");
 			break;
 			case 13:
-				Panel.currentScreen = 0;
+				Main.switchContentPane(0);
 			break;
 			default:
-				System.out.println(ID + ": null (" + window.buttons[ID].getScreen() + ")");
+				System.out.println(ID + ": null (" + Panel.buttons[ID].getScreen() + ")");
 			break;
 		}
 	}
 
-	public ButtonHandler(Window w) {
-		window = w;
+	public ButtonHandler(Panel p) {
+		panel = p;
 	}
 
-	@SuppressWarnings("static-access")
 	public void mousePressed(MouseEvent e) {
-		for (int i = 0; i < window.buttons.length; i++) {
-			if (window.buttons[i] != null) {
-				if (e.getX() >= window.buttons[i].getX() && e.getX() <= window.buttons[i].getWidth() + window.buttons[i].getX()) {
-					if (e.getY() >= Menu.buttons[i].getY() && e.getY() <= window.buttons[i].getHeight() + window.buttons[i].getY()) {
-						if (window.buttons[i].getScreen() == Panel.currentScreen) ButtonPress(i);
+		for (int i = 0; i < Panel.buttons.length; i++) {
+			if (Panel.buttons[i] != null) {
+				if (e.getX() >= Panel.buttons[i].getX() && e.getX() <= Panel.buttons[i].getWidth() + Panel.buttons[i].getX()) {
+					if (e.getY() >= Panel.buttons[i].getY() && e.getY() <= Panel.buttons[i].getHeight() + Panel.buttons[i].getY()) {
+						if (Panel.buttons[i].getScreen() == Panel.currentScreen) ButtonPress(i);
 					}
 				}
 			}

@@ -7,23 +7,20 @@ public class SingleplayerMenu extends Menu {
 	static int ID = 1;
 	static boolean inizialized = false;
 
-	public SingleplayerMenu() {}
+	public SingleplayerMenu() {
+		initializeButtons();
+	}
 
-	public static void initializeButtons() {
+	public void initializeButtons() {
 		if (!inizialized) {
-			int m = 30;										// margin
-			int h = m;										// header
-			int s = 20;										// spacing
-			int BID = 3;									// button ID
-			int BO = 4;										// button offset
-			int BH = ((height - (h + (m * 2))) / BID) - s; 	// button height
-			int fontSize = 60;
+			int BID = 3;
+			int BO = 4;
 			BID--;
-			createButton(BID + BO, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Back", ID, fontSize);
+			createButton(BID + BO, m, h + s + ((bHeight + s) * (BID +1)), width - (m * 2), bHeight, "Back", ID, fontSize);
 			BID--;
-			createButton(BID + BO, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "New Game", ID, fontSize);
+			createButton(BID + BO, m,(int) (h + s + (((bHeight * 1.25) + s) * BID)), width - (m * 2), (int) (bHeight * 1.25), "New Game", ID, fontSize);
 			BID--;
-			createButton(BID + BO, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Continiue", ID, fontSize);
+			createButton(BID + BO, m,(int) (h + s + (((bHeight * 1.25) + s) * BID)), width - (m * 2), (int) (bHeight * 1.25), "Continiue", ID, fontSize);
 			inizialized = true;
 		}
 	}

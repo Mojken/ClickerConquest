@@ -3,16 +3,16 @@ package net.abysmal.clickerconquest.windows;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import net.abysmal.clickerconquest.graphics.Panel;
-import net.abysmal.clickerconquest.utils.Button;
 import net.abysmal.clickerconquest.utils.ButtonHandler;
 
 public class Window extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	public static Button[] buttons;
-
-	public static int width, height, scale;
+//	public int width = 1920;
+//	public int height = 1080;
+ public int width = 550;
+ public int height = (width / 12) * 16;
 
 	static int ID;
 	protected Panel p;
@@ -23,14 +23,12 @@ public class Window extends JFrame {
 	}
 
 	private void createWindow() {
-		setVisible(true);
 		setIconImage(new ImageIcon("res/net/abysmal/clickerconquest/icon32.ico").getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setTitle("Clicker Conquest");
-	}
-	
-	public static void createButton(int ID, int x, int y, int width, int height, String text, int screen, int fontSize) {
-		buttons[ID] = new Button(ID, x, y, width, height, text, screen, fontSize);
+		setSize(width, height);
+		setLocationRelativeTo(null);
+		setVisible(true);
 	}
 }

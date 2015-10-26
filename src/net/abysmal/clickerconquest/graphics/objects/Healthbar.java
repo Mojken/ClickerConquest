@@ -2,20 +2,21 @@ package net.abysmal.clickerconquest.graphics.objects;
 
 public class Healthbar {
 
-	int x, y, width, height, health, currentHealth;
+	int x, y, width, height;
+	float health, currentHealth;
 	double currentHealthPercentage;
 	boolean enemy;
 
 	public Healthbar(int x, int y, int width, int height, int health, boolean enemy) {
 		this.x = x;
 		this.y = y;
+		this.enemy = enemy;
 		this.width = width;
 		this.height = height;
 		this.health = health;
-		this.enemy = enemy;
 		currentHealth = health;
 		
-		while (true) if (currentHealth < 0) currentHealth = 0;
+		while (currentHealth < 0) currentHealth = 0;
 	}
 
 	public int getX() {
@@ -34,7 +35,7 @@ public class Healthbar {
 		return height;
 	}
 
-	public int getHealth() {
+	public float getHealth() {
 		return health;
 	}
 
@@ -42,7 +43,7 @@ public class Healthbar {
 		return enemy;
 	}
 
-	public int getCurrentHealth() {
+	public float getCurrentHealth() {
 		return currentHealth;
 	}
 
@@ -51,7 +52,7 @@ public class Healthbar {
 		return currentHealthPercentage;
 	}
 
-	public void setCurrentHealth(int currentHealth) {
-		this.currentHealth = currentHealth;
+	public void setCurrentHealth(float health2) {
+		this.currentHealth = health2;
 	}
 }

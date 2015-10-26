@@ -1,29 +1,26 @@
 package net.abysmal.clickerconquest.windows.menus;
 
 import net.abysmal.clickerconquest.graphics.Panel;
-import net.abysmal.clickerconquest.utils.Button;
 import net.abysmal.clickerconquest.utils.ButtonHandler;
-import net.abysmal.clickerconquest.windows.Window;
 
-public class Menu extends Window {
+public class Menu extends Panel {
 
 	private static final long serialVersionUID = 1L;
+	
 
 	public Menu() {
-		super();
-		scale = 2;
-		height = 700 / scale;
-		height *= scale;
-		width = (height / 16) * 12;
-		setSize(width, height);
-		setLocationRelativeTo(null);
-		buttons = new Button[40];
 		BH = new ButtonHandler(this);
-		p = new Panel(this);
-		setContentPane(p);
-		p.addMouseListener(BH);
-		StartMenu.initializeButtons();
+		addMouseListener(BH);
 	}
+	
+	int h = 120;										// header
+	int s = 20;											// spacing
+	int m = 30;											// margin
+	int BID = 4;										// button ID
+	int BO = 0;
+	int bHeight = ((height - (h + m)) / BID) - s; 		// button height
+	int fontSize = (bHeight - 40);
 
-	public static void initializeButtons() {}
+	public void initializeButtons() {
+	}
 }

@@ -7,25 +7,22 @@ public class SettingsMenu extends Menu {
 	static int ID = 3;
 	static boolean inizialized = false;
 
-	public SettingsMenu() {}
+	public SettingsMenu() {
+		initializeButtons();
+	}
 
-	public static void initializeButtons() {
+	public void initializeButtons() {
 		if (!inizialized) {
-			int m = 30;										// margin
-			int h = m;										// header
-			int s = 20;										// spacing
-			int BID = 4;									// button ID
-			int BO = 10;									// button offset
-			int BH = ((height - (h + (m * 2))) / BID) - s; 	// button height
-			int fontSize = 60;
+			int BID = 4;
+			int BO = 10;
 			BID--;
-			createButton(BID + BO, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Back", ID, fontSize);
+			createButton(BID + BO, m, h + s + ((bHeight + s) * BID), width - (m * 2), bHeight, "Back", ID, fontSize);
 			BID--;
-			createButton(BID + BO, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Something", ID, fontSize);
+			createButton(BID + BO, m, h + s + ((bHeight + s) * BID), width - (m * 2), bHeight, "Something", ID, fontSize);
 			BID--;
-			createButton(BID + BO, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Something", ID, fontSize);
+			createButton(BID + BO, m, h + s + ((bHeight + s) * BID), width - (m * 2), bHeight, "Something", ID, fontSize);
 			BID--;
-			createButton(BID + BO, m, h + s + ((BH + s) * BID), width - (m * 2), BH, "Something", ID, fontSize);
+			createButton(BID + BO, m, h + s + ((bHeight + s) * BID), width - (m * 2), bHeight, "Something", ID, fontSize);
 			inizialized = true;
 		}
 	}
