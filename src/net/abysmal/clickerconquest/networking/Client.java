@@ -1,13 +1,11 @@
 package net.abysmal.clickerconquest.networking;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.nio.charset.Charset;
 import net.abysmal.clickerconquest.Game;
 import net.abysmal.clickerconquest.entities.Idol;
 import net.abysmal.clickerconquest.entities.Player;
@@ -57,11 +55,10 @@ public class Client {
 				String message = new String(packet.getData());
 
 				if (message.startsWith("/d/")) {
-					String stats = message.substring(3, message.length());
-					process(stats, 1);
+					process(message.substring(3), 1);
 				} else if (message.startsWith("/s/")) {
 					@SuppressWarnings("unused")
-					String service = message.substring(3, message.length());
+					String service = message.substring(3);
 				}
 			}
 		};
@@ -126,7 +123,7 @@ public class Client {
 			for (int i = 0; i < idol.length; i++)
 				idols += idollevels[i];
 
-			message = "/d/" + convert(units.length()) + units + idols;
+			message = "/d/" + convert(units.length() + 1) + units + idols;
 			char[] chars = message.toCharArray();
 			byte[] bytes = new byte[chars.length];
 			for (int i = 0; i < message.length(); i++) {
@@ -138,39 +135,48 @@ public class Client {
 
 	public static void process(String message, int type) {
 		if (type == 1) {
-			byte[] bitLength = new byte[50];
-			byte[] bitIndex = new byte[50];
-			float[] stats = new float[11];
-			String[] split = new String[11];
-			int length = (int) (message.charAt(0));
+			int length = convert(message.substring(0, 1));
+			
+			String units = message.substring(1, length);
+			int unitLength = convert(units.substring(0, 1));
+			int[] unitIndex = new int[unitLength];
+			int[] unitLengths = new int[unitLength];
+			Unit[] Units = new Unit[4096];
+			
+			String idols = message.substring(length);
+			int idolLength = convert(idols.substring(0, 1));
+			int[] idolIndex = new int[idolLength];
+			int[] idolLengths = new int[idolLength];
+			Idol[] Idols = new Idol[4096];
 
-			for (int i = 0; i < length; i++) {
-				bitLength[i] = (byte) (message.charAt(0));
-				message = message.substring(1);
+			for (int i = 0; i < unitLength; i++) {
+				unitIndex[i] = convert(units.substring(0, 1));
+				units = units.substring(1);
 			}
-
-			for (int i = 0; i < length; i++) {
-				bitIndex[i] = (byte) (message.charAt(0));
-				message = message.substring(1);
+			for (int i = 0; i < unitLength; i++) {
+				unitLengths[i] = convert(units.substring(0, 1));
+				units = units.substring(1);
 			}
-
-			for (int i = 0; i < length; i++) {
-				if (bitIndex[i] != 7 && bitIndex[i] != 10) stats[bitIndex[i]] = convert(message.substring(0, bitLength[i]));
-				else split[i] = message.substring(0, bitLength[i]);
-				message = message.substring(bitLength[i]);
+			for (int i = 0; i < unitLength; i++) {
+				Units[i] = new Unit(unitIndex[i], convert(units.substring(0, unitLengths[i])));
+				units = units.substring(unitLengths[i]);
 			}
-
-			Game.players[0].setAP(stats[0]);
-			Game.players[0].setAPGain(stats[1]);
-			Game.players[0].setClickDamage(stats[2]);
-			Game.players[0].setDPS(stats[3]);
-			Game.players[0].setFunding(stats[4]);
-			Game.players[0].setHealth(stats[5]);
-			Game.players[0].setHP(stats[6]);
-			Game.players[0].setIdols(Game.players[0].convertIdols(split[7]));
-			Game.players[0].setKarma(stats[8]);
-			Game.players[0].setMoney(stats[9]);
-			Game.players[0].setUnits(Game.players[0].convertUnits(split[10]));
+			
+			for (int i = 0; i < idolLength; i++) {
+				idolIndex[i] = convert(idols.substring(0, 1));
+				idols = idols.substring(1);
+			}
+			for (int i = 0; i < idolLength; i++) {
+				idolLengths[i] = convert(idols.substring(0, 1));
+				idols = idols.substring(1);
+			}
+			for (int i = 0; i < idolLength; i++) {
+				Idols[i] = new Idol(idolIndex[i], convert(idols.substring(0, idolLengths[i])));
+				idols = idols.substring(idolLengths[i]);
+			}
+			
+			Game.players[1].setUnits(Units);
+			Game.players[1].setIdols(Idols);
 		}
 	}
 
@@ -180,15 +186,15 @@ public class Client {
 		result[1] = (char) ((number >> 16) & 0xFF);
 		result[2] = (char) ((number >> 8) & 0xFF);
 		result[3] = (char) (number & 0xFF);
-	    return new String(result);
+		return new String(result);
 	}
 
 	public static int convert(String message) {
 		int result = 0;
-	    for (int i=0; i < message.length(); i++) {
-	        char c = message.charAt(i);
-	        result = (result << 8) | (c & 0xFF);
-	    }
-	    return result;
+		for (int i = 0; i < message.length(); i++) {
+			char c = message.charAt(i);
+			result = (result << 8) | (c & 0xFF);
+		}
+		return result;
 	}
 }

@@ -76,8 +76,9 @@ public class Graphics {
 
 	public static void drawKarmabar(Graphics2D g, int x, int y, int width, int height, int[] is) {
 // Image karmabarFill = getImageFromArray(is, 85, 109);
-		int w = karmabar.getWidth(null);
-		int h = karmabar.getHeight(null);
+		int w = 85;
+		int h = 109;
+//		System.out.println(w + ", " + h);
 		g.drawImage(karmabar, x, y, width + x, height + y, 0, 0, w, h, null);
 		g.drawImage(getImageFromArray(is, w, h), x, y, width + x, height + y, 0, 0, w, h, null);
 	}
@@ -86,6 +87,7 @@ public class Graphics {
 		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		WritableRaster raster = (WritableRaster) image.getData();
 		raster.setPixels(0, 0, width - 1, height - 1, pixels);
+		image.setData(raster);
 		return image;
 	}
 

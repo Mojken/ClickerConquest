@@ -1,7 +1,6 @@
 package net.abysmal.clickerconquest;
 
 import net.abysmal.clickerconquest.graphics.Panel;
-import net.abysmal.clickerconquest.networking.Client;
 import net.abysmal.clickerconquest.windows.GameWindow;
 import net.abysmal.clickerconquest.windows.Window;
 import net.abysmal.clickerconquest.windows.menus.MultiplayerMenu;
@@ -37,6 +36,7 @@ public class Main implements Runnable {
 				Thread.sleep(20);
 			} catch (Exception e) {
 			}
+//			if (Panel.currentScreen == 4)GameWindow.karmabar.setCurrentKarma(GameWindow.karmabar.getCurrentKarma() - 0.01);
 		}
 	}
 

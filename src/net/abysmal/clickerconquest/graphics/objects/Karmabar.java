@@ -1,6 +1,5 @@
 package net.abysmal.clickerconquest.graphics.objects;
 
-import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -10,7 +9,7 @@ public class Karmabar {
 
 	int x, y, width, height;
 	double currentKarmaPercentage, karma, currentKarma;
-	int[] overlay = new int[85 * 109];
+	int[] overlay = new int[85 * 109 * 4];
 	int[] pixels = new int[85 * 109 * 4];
 
 	public Karmabar(int x, int y, int width, int height, double karma) {
@@ -19,23 +18,75 @@ public class Karmabar {
 		this.width = width;
 		this.height = height;
 		this.karma = karma;
-		currentKarma = karma;
-		currentKarmaPercentage = (double) (currentKarma) / karma;
+		currentKarma = karma / 2;
 
 		while (currentKarma < 0)
 			currentKarma = 0;
 	}
 
 	public int[] getKarmaOverlay() {
-		BufferedImage img = null;
 		try {
-			img = ImageIO.read(Graphics.karmabarOverlay);
-			for (int y = 1; y <= 109; y++) {
-				for (int x = 1; x <= 85; x++) {
-					overlay[(x * y) - 1] = img.getRGB(x - 1, y - 1);
-					System.out.println(pixels[(x * y) - 1]);
-					if (overlay[x * y - 1] == 0x000000FF) pixels[(x * y) - 1] = 0x00000000;
-					if (overlay[x * y - 1] == 0xFFFFFFFF && y > 109 - (int) (109 * currentKarmaPercentage)) pixels[(x * y) - 1] = 0x50AFA0FF;
+			BufferedImage img = ImageIO.read(Graphics.karmabarOverlay);
+			for (int y = 0; y < 109; y++) {
+				for (int x = 0; x < 85; x++) {
+					overlay[y * 84 + x] = img.getRGB(x, y);
+					if (overlay[y * 84 + x] == -16777216) {
+						pixels[((y * 84 + x) * 4)] = 0x00;
+						pixels[((y * 84 + x) * 4) + 1] = 0x00;
+						pixels[((y * 84 + x) * 4) + 2] = 0x00;
+						pixels[((y * 84 + x) * 4) + 3] = 0x00;
+
+					} else if (overlay[y * 84 + x] == -65536 && getCurrentKarmaPercentage() >= 0.9) {
+						pixels[((y * 84 + x) * 4)] = 0x6E;
+						pixels[((y * 84 + x) * 4) + 1] = 0xA0;
+						pixels[((y * 84 + x) * 4) + 2] = 0x9B;
+						pixels[((y * 84 + x) * 4) + 3] = 0xFF;
+					} else if (overlay[y * 84 + x] == -65281 && getCurrentKarmaPercentage() >= 0.8) {
+						pixels[((y * 84 + x) * 4)] = 0x6E;
+						pixels[((y * 84 + x) * 4) + 1] = 0xA0;
+						pixels[((y * 84 + x) * 4) + 2] = 0x9B;
+						pixels[((y * 84 + x) * 4) + 3] = 0xFF;
+					} else if (overlay[y * 84 + x] == -16744193 && getCurrentKarmaPercentage() >= 0.7) {
+						pixels[((y * 84 + x) * 4)] = 0x6E;
+						pixels[((y * 84 + x) * 4) + 1] = 0xA0;
+						pixels[((y * 84 + x) * 4) + 2] = 0x9B;
+						pixels[((y * 84 + x) * 4) + 3] = 0xFF;
+					} else if (overlay[y * 84 + x] == -16711936 && getCurrentKarmaPercentage() >= 0.6) {
+						pixels[((y * 84 + x) * 4)] = 0x6E;
+						pixels[((y * 84 + x) * 4) + 1] = 0xA0;
+						pixels[((y * 84 + x) * 4) + 2] = 0x9B;
+						pixels[((y * 84 + x) * 4) + 3] = 0xFF;
+					} else if (overlay[y * 84 + x] == -16744448 && getCurrentKarmaPercentage() >= 0.5) {
+						pixels[((y * 84 + x) * 4)] = 0x6E;
+						pixels[((y * 84 + x) * 4) + 1] = 0xA0;
+						pixels[((y * 84 + x) * 4) + 2] = 0x9B;
+						pixels[((y * 84 + x) * 4) + 3] = 0xFF;
+					} else if (overlay[y * 84 + x] == -16776961 && getCurrentKarmaPercentage() >= 0.4) {
+						pixels[((y * 84 + x) * 4)] = 0x6E;
+						pixels[((y * 84 + x) * 4) + 1] = 0xA0;
+						pixels[((y * 84 + x) * 4) + 2] = 0x9B;
+						pixels[((y * 84 + x) * 4) + 3] = 0xFF;
+					} else if (overlay[y * 84 + x] == -256 && getCurrentKarmaPercentage() >= 0.3) {
+						pixels[((y * 84 + x) * 4)] = 0x6E;
+						pixels[((y * 84 + x) * 4) + 1] = 0xA0;
+						pixels[((y * 84 + x) * 4) + 2] = 0x9B;
+						pixels[((y * 84 + x) * 4) + 3] = 0xFF;
+					} else if (overlay[y * 84 + x] == -16711681 && getCurrentKarmaPercentage() >= 0.2) {
+						pixels[((y * 84 + x) * 4)] = 0x6E;
+						pixels[((y * 84 + x) * 4) + 1] = 0xA0;
+						pixels[((y * 84 + x) * 4) + 2] = 0x9B;
+						pixels[((y * 84 + x) * 4) + 3] = 0xFF;
+					} else if (overlay[y * 84 + x] == -32768 && getCurrentKarmaPercentage() >= 0.1) {
+						pixels[((y * 84 + x) * 4)] = 0x6E;
+						pixels[((y * 84 + x) * 4) + 1] = 0xA0;
+						pixels[((y * 84 + x) * 4) + 2] = 0x9B;
+						pixels[((y * 84 + x) * 4) + 3] = 0xFF;
+					} else {
+						pixels[((y * 84 + x) * 4)] = 0x8C;
+						pixels[((y * 84 + x) * 4) + 1] = 0x80;
+						pixels[((y * 84 + x) * 4) + 2] = 0x9B;
+						pixels[((y * 84 + x) * 4) + 3] = 0xFF;
+					}
 				}
 			}
 		} catch (IOException e) {
