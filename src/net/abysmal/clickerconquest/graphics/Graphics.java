@@ -8,6 +8,8 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 import java.io.File;
+import net.abysmal.clickerconquest.graphics.objects.UnitDisplay;
+import net.abysmal.clickerconquest.utils.TextField;
 import net.abysmal.clickerconquest.windows.GameWindow;
 import net.abysmal.clickerconquest.windows.menus.Menu;
 
@@ -22,6 +24,7 @@ public class Graphics {
 	static Image DPS = Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/net/abysmal/clickerconquest/DPS.png"));
 	static Image clickDamage = Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/net/abysmal/clickerconquest/clickDamage.png"));
 	static Image HP = Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/net/abysmal/clickerconquest/HP.png"));
+	static Image portrait = Toolkit.getDefaultToolkit().getImage(Menu.class.getResource("/net/abysmal/clickerconquest/portrait.png"));
 
 	public static void drawGame(Graphics2D g) {
 		int[] xLayout = GameWindow.getXLayout();
@@ -59,6 +62,20 @@ public class Graphics {
 		}
 	}
 
+	public static void drawText(Graphics2D g, TextField textField) {
+		g.setColor(new Color(45, 45, 60));
+		if (textField.getAlignment() == TextField.CENTER) {
+			g.setFont(new Font("Blackadder ITC", 0, textField.getFontSize()));
+			g.drawChars(textField.getText().toCharArray(), 0, textField.getText().length(), (textField.getX()) + ((textField.getWidth() / 2) - (g.getFontMetrics().stringWidth(textField.getText()) / 2)), textField.getY() + (textField.getHeight() / 2) + (textField.getFontSize() / (textField.getType() == TextField.PASSWORD ? 5:3)));
+		} else if (textField.getAlignment() == TextField.LEFT) {
+			g.setFont(new Font("Blackadder ITC", 0, textField.getFontSize()));
+			g.drawChars(textField.getText().toCharArray(), 0, textField.getText().length(), textField.getX() + 10, textField.getY() + (textField.getHeight() / 2) + (textField.getFontSize() / (textField.getType() == TextField.PASSWORD ? 5:3)));
+		} else if (textField.getAlignment() == TextField.RIGHT) {
+			g.setFont(new Font("Blackadder ITC", 0, textField.getFontSize()));
+			g.drawChars(textField.getText().toCharArray(), 0, textField.getText().length(), (textField.getX() - 10) + (textField.getWidth() - g.getFontMetrics().stringWidth(textField.getText())), textField.getY() + (textField.getHeight() / 2) + (textField.getFontSize() / 3));
+		}
+	}
+
 	public static void drawHealthbar(Graphics2D g, int x, int y, int width, int height, double currentHealthPercentage, boolean enemy) {
 		Color health = new Color(165, 35, 15);
 		int currentHealth = (int) ((width - 10) * currentHealthPercentage);
@@ -75,10 +92,8 @@ public class Graphics {
 	}
 
 	public static void drawKarmabar(Graphics2D g, int x, int y, int width, int height, int[] is) {
-// Image karmabarFill = getImageFromArray(is, 85, 109);
 		int w = 85;
 		int h = 109;
-//		System.out.println(w + ", " + h);
 		g.drawImage(karmabar, x, y, width + x, height + y, 0, 0, w, h, null);
 		g.drawImage(getImageFromArray(is, w, h), x, y, width + x, height + y, 0, 0, w, h, null);
 	}
@@ -106,5 +121,27 @@ public class Graphics {
 		g.drawImage(path, x2 - dMargin, y1, x2, y1 + dMargin, w - margin, 0, w, margin, null);										// Draw top-right corner
 		g.drawImage(path, x1, y2 - dMargin, x1 + dMargin, y2, 0, h - margin, margin, h, null);										// Draw bottom-left corner
 		g.drawImage(path, x2 - dMargin, y2 - dMargin, x2, y2, w - margin, h - margin, w, h, null);									// Draw bottom-right corner
+	}
+
+	public static void drawUnitDisplay(Graphics2D g, UnitDisplay unitDisplay) {
+		int ID = unitDisplay.getID();
+		int m = 12;
+		int x = unitDisplay.getX() + m;
+		int y = unitDisplay.getY() + m + 2;
+		int width = unitDisplay.getWidth() - m * 2;
+		int height = unitDisplay.getHeight() - (m + 2) * 2;
+		int unit = unitDisplay.getUnit().getID();
+		g.drawImage(portrait, x, y, x + width / 3, y + height, 0, 0, portrait.getWidth(null), portrait.getHeight(null), null);
+		int[] xLayout = { x + m + (width / 3), (width - (12 + (width / 3))) };
+		int[] yLayout = { y, height / 4, (height / 4) * 2, (height / 4) * 3 };
+		Panel.textFields[ID + (1 * 8)] = new TextField(unit, xLayout[0], yLayout[0], xLayout[1], yLayout[1], 4, 58, TextField.TEXT_FIELD, 100, TextField.LEFT, unitDisplay.getUnit(), TextField.STAT_NAME);
+		Panel.textFields[ID + (2 * 8)] = new TextField(unit, xLayout[0], y + yLayout[1] - 10, xLayout[1], yLayout[1], 4, 34, TextField.TEXT_FIELD, 100, TextField.LEFT, unitDisplay.getUnit(), TextField.STAT_DAMAGE);
+		Panel.textFields[ID + (3 * 8)] = new TextField(unit, xLayout[0], y + yLayout[1] - 10, xLayout[1], yLayout[1], 4, 34, TextField.TEXT_FIELD, 100, TextField.CENTER, unitDisplay.getUnit(), TextField.STAT_HP);
+		Panel.textFields[ID + (4 * 8)] = new TextField(unit, xLayout[0], y + yLayout[1] - 10, xLayout[1], yLayout[1], 4, 34, TextField.TEXT_FIELD, 100, TextField.RIGHT, unitDisplay.getUnit(), TextField.STAT_DEFENCE);
+		g.drawLine(xLayout[0] + (m / 2), y + yLayout[2] - 10, xLayout[0] + xLayout[1] - (m / 2), y + yLayout[2] - 10);
+		Panel.textFields[ID + (5 * 8)] = new TextField(unit, xLayout[0], y + yLayout[2] - 20, xLayout[1], yLayout[1], 4, 55, TextField.TEXT_FIELD, 100, TextField.RIGHT, unitDisplay.getUnit(), TextField.STAT_AMOUNT);
+		Panel.textFields[ID + (6 * 8)] = new TextField(unit, xLayout[0], y + yLayout[2] - 14, xLayout[1], yLayout[1], "x", 4, 35, TextField.TEXT_FIELD, 100, TextField.RIGHT);
+		Panel.textFields[ID + (7 * 8)] = new TextField(unit, xLayout[0], y + yLayout[3] - 20, xLayout[1], yLayout[1], 4, 65, TextField.TEXT_FIELD, 100, TextField.RIGHT, unitDisplay.getUnit(), TextField.STAT_COST);
+
 	}
 }

@@ -2,6 +2,7 @@ package net.abysmal.clickerconquest;
 
 import net.abysmal.clickerconquest.graphics.Panel;
 import net.abysmal.clickerconquest.windows.GameWindow;
+import net.abysmal.clickerconquest.windows.LoginWindow;
 import net.abysmal.clickerconquest.windows.Window;
 import net.abysmal.clickerconquest.windows.menus.MultiplayerMenu;
 import net.abysmal.clickerconquest.windows.menus.SettingsMenu;
@@ -12,6 +13,8 @@ public class Main implements Runnable {
 
 	public static Window window;
 	public static Panel panel;
+	public static String username;
+	public static int PlayerID;
 	Thread t;
 	Thread tick;
 	boolean running = false;
@@ -23,7 +26,7 @@ public class Main implements Runnable {
 	public Main() {
 		window = new Window();
 		panel = new Panel();
-		window.setContentPane(new StartMenu());
+		window.setContentPane(new LoginWindow());
 		t = new Thread(this);
 		running = true;
 		t.start();
@@ -36,15 +39,19 @@ public class Main implements Runnable {
 				Thread.sleep(20);
 			} catch (Exception e) {
 			}
-//			if (Panel.currentScreen == 4)GameWindow.karmabar.setCurrentKarma(GameWindow.karmabar.getCurrentKarma() - 0.01);
 		}
 	}
 
 	public static void switchContentPane(int ID) {
 		switch (ID) {
 			case 0:
+				window.width = 550;
+				window.height = (window.width / 12) * 16;
+				window.setSize(window.width, window.height);
+				window.getContentPane().setSize(window.width - (window.getInsets().left + window.getInsets().right), window.height - (window.getInsets().top + window.getInsets().bottom));
 				Main.window.setContentPane(new StartMenu());
 				Panel.currentScreen = ID;
+				window.setLocationRelativeTo(null);
 			break;
 			case 1:
 				Main.window.setContentPane(new SingleplayerMenu());
@@ -60,6 +67,10 @@ public class Main implements Runnable {
 			break;
 			case 4:
 				Main.window.setContentPane(new GameWindow());
+				Panel.currentScreen = ID;
+			break;
+			case 5:
+				Main.window.setContentPane(new LoginWindow());
 				Panel.currentScreen = ID;
 			break;
 		}

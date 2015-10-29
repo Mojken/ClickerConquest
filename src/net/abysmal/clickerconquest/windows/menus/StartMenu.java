@@ -8,7 +8,8 @@ public class StartMenu extends Menu {
 	static boolean inizialized = false;
 
 	public StartMenu() {
-		initializeButtons();
+		super();
+//		initializeButtons();
 	}
 
 	public void initializeButtons() {

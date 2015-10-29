@@ -14,4 +14,8 @@ public class ServerClient {
 		this.address = address;
 		this.port = port;
 	}
+
+	public short getID() {
+		return ID;
+	}
 }

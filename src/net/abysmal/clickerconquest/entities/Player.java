@@ -1,11 +1,11 @@
 package net.abysmal.clickerconquest.entities;
 
-import net.abysmal.clickerconquest.networking.Client;
 import net.abysmal.clickerconquest.windows.GameWindow;
 
 public class Player extends Entity {
 
-	String Username;
+	String username;
+	int ID;
 	float money = 100;
 	float karma = 0;
 	float health = 10000;
@@ -20,10 +20,21 @@ public class Player extends Entity {
 	Idol[] idols = new Idol[13];
 	boolean enemy;
 
-	public Player(String Username, boolean enemy) {}
+	public Player(int ID, boolean enemy) {
+		switch (ID) {
+			case 42:
+				username = "Mojken";
+			break;
+			case 47105:
+				username = "Deepstream";
+			break;
+		}
+		this.ID = ID;
+		this.enemy = enemy;
+	}
 
 	public void process() {
-		if (health <= 0) System.out.println(Username + " is dead!");
+		if (health <= 0) System.out.println(username + " is dead!");
 		if (enemy) {
 			GameWindow.healthbars[1].setCurrentHealth(health);
 		} else {
@@ -122,59 +133,6 @@ public class Player extends Entity {
 
 	public void setUnits(Unit[] units) {
 		this.units = units;
-	}
-
-	public Unit[] convertUnits(String rawUnits) {
-		byte[] bitLength = new byte[50];
-		byte[] bitIndex = new byte[50];
-		Unit[] uints = new Unit[100];
-		int length = (int) (rawUnits.charAt(0));
-
-		for (int i = 0; i < length; i++) {
-			bitLength[i] = (byte) (rawUnits.charAt(0));
-			rawUnits = rawUnits.substring(1);
-		}
-
-		for (int i = 0; i < length; i++) {
-			bitIndex[i] = (byte) (rawUnits.charAt(0));
-			rawUnits = rawUnits.substring(1);
-		}
-
-		for (int i = 0; i < length; i++) {
-			units[bitIndex[i]] = new Unit(bitIndex[i], Client.convert(rawUnits.substring(0, bitLength[i])));
-			rawUnits = rawUnits.substring(bitLength[i]);
-		}
-		
-		return uints;
-	}
-
-	public Idol[] convertIdols(String rawIdols) {
-		byte[] bitLength = new byte[50];
-		byte[] bitIndex = new byte[50];
-		Idol[] idols = new Idol[100];
-		int length = (int) (rawIdols.charAt(0));
-
-		for (int i = 0; i < length; i++) {
-			bitLength[i] = (byte) (rawIdols.charAt(0));
-			rawIdols = rawIdols.substring(1);
-		}
-
-		for (int i = 0; i < length; i++) {
-			bitIndex[i] = (byte) (rawIdols.charAt(0));
-			rawIdols = rawIdols.substring(1);
-		}
-
-		for (int i = 0; i < length; i++) {
-			idols[bitIndex[i]] = new Idol(bitIndex[i], Client.convert(rawIdols.substring(0, bitLength[i])));
-			rawIdols = rawIdols.substring(bitLength[i]);
-		}
-		
-		return idols;
-	}
-
-	public float getIdolString() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 }

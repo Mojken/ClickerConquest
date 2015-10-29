@@ -7,23 +7,41 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import net.abysmal.clickerconquest.Game;
+import net.abysmal.clickerconquest.Main;
+import net.abysmal.clickerconquest.actions.CreateNewGame;
 import net.abysmal.clickerconquest.entities.Idol;
 import net.abysmal.clickerconquest.entities.Player;
 import net.abysmal.clickerconquest.entities.Unit;
 
 public class Client {
 
+	public boolean connected = false;
 	private String name, address;
 	private int port;
 	private DatagramSocket socket;
 	private InetAddress ip;
 	private Thread send;
-	private Thread recieve;
+	private Thread listen;
 
-	public Client(String name, String address, int port) {
+	public Client(String name, String address) {
 		this.name = name;
-		this.address = address;
-		this.port = port;
+		if (address != null && address.split(":").length == 2) {
+			this.address = address.split(":")[0];
+			this.port = Integer.parseInt(address.split(":")[1]);
+			boolean connected = openConnection(this.address);
+			if (!connected) System.err.println("Unable to connect to " + this.address + this.port);
+			if (connected) {
+				String message = "/c/" + convert(Main.PlayerID).substring(2);
+				send(message.getBytes());
+				if (recieve().startsWith("/s/c/")) {
+					this.connected = true;
+					System.out.println("Connected!");
+					listen();
+				}
+			}
+		} else {
+			System.err.println("Incorrect IP Format");
+		}
 	}
 
 	public String getName() {
@@ -38,31 +56,39 @@ public class Client {
 		return port;
 	}
 
-	public void recieve() {
-		recieve = new Thread("Recieve") {
+	public String recieve() {
+		byte[] data = new byte[1024];
+		DatagramPacket packet = new DatagramPacket(data, data.length);
+
+		try {
+			socket.receive(packet);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return (new String(packet.getData()));
+	}
+
+	public void listen() {
+		listen = new Thread("Listen") {
 
 			public void run() {
-
-				byte[] data = new byte[1024];
-				DatagramPacket packet = new DatagramPacket(data, data.length);
-
-				try {
-					socket.receive(packet);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
-				String message = new String(packet.getData());
-
-				if (message.startsWith("/d/")) {
-					process(message.substring(3), 1);
-				} else if (message.startsWith("/s/")) {
-					@SuppressWarnings("unused")
-					String service = message.substring(3);
+				while (connected) {
+					String message = recieve();
+					if (message.startsWith("/d/")) {
+						process(message.substring(3), 1);
+					} else if (message.startsWith("/s/")) {
+						String service = message.substring(3);
+						if (service.startsWith("p/")) {
+							int[] players = { convert(message.substring(2, 4)), convert(message.substring(5, 7)) };
+							new CreateNewGame(players);
+							Main.switchContentPane(4);
+						}
+					}
 				}
 			}
 		};
-		recieve.start();
+		listen.start();
 	}
 
 	public void send(final byte[] data) {
@@ -97,7 +123,8 @@ public class Client {
 	public void process(Player player, int type) {
 		if (type == 2) {
 			String message;
-			String units, idols;
+			String units = "";
+			String idols = "";
 			Unit[] unit = Game.players[0].getUnits();
 			Idol[] idol = Game.players[0].getIdols();
 			String[] unitlevels = new String[unit.length];
@@ -105,23 +132,23 @@ public class Client {
 
 			units = "" + convert(unit.length);
 			for (int i = 0; i < unit.length; i++)
-				unitlevels[i] = convert(unit[i].getAmmount());
+				if (unit[i] != null) unitlevels[i] = convert(unit[i].getAmount());
 			for (int i = 0; i < unit.length; i++)
-				units += convert(unit[i].getType());
+				if (unit[i] != null) units += convert(unit[i].getID());
 			for (int i = 0; i < unit.length; i++)
-				units += convert(unitlevels[i].length());
+				if (unit[i] != null) units += convert(unitlevels[i].length());
 			for (int i = 0; i < unit.length; i++)
-				units += unitlevels[i];
+				if (unit[i] != null) units += unitlevels[i];
 
 			idols = "" + convert(idol.length);
 			for (int i = 0; i < idol.length; i++)
-				idollevels[i] = convert(idol[i].getLevel());
+				if (idol[i] != null) idollevels[i] = convert(idol[i].getLevel());
 			for (int i = 0; i < idol.length; i++)
-				idols += convert(idol[i].getIndex());
+				if (idol[i] != null) idols += convert(idol[i].getIndex());
 			for (int i = 0; i < idol.length; i++)
-				idols += convert(idollevels[i].length());
+				if (idol[i] != null) idols += convert(idollevels[i].length());
 			for (int i = 0; i < idol.length; i++)
-				idols += idollevels[i];
+				if (idol[i] != null) idols += idollevels[i];
 
 			message = "/d/" + convert(units.length() + 1) + units + idols;
 			char[] chars = message.toCharArray();
@@ -136,32 +163,31 @@ public class Client {
 	public static void process(String message, int type) {
 		if (type == 1) {
 			int length = convert(message.substring(0, 1));
-			
+
 			String units = message.substring(1, length);
-			int unitLength = convert(units.substring(0, 1));
-			int[] unitIndex = new int[unitLength];
-			int[] unitLengths = new int[unitLength];
+			int[] unitIndex = new int[length];
+			int[] unitLengths = new int[length];
 			Unit[] Units = new Unit[4096];
-			
+
 			String idols = message.substring(length);
 			int idolLength = convert(idols.substring(0, 1));
 			int[] idolIndex = new int[idolLength];
 			int[] idolLengths = new int[idolLength];
 			Idol[] Idols = new Idol[4096];
 
-			for (int i = 0; i < unitLength; i++) {
+			for (int i = 0; i < length; i++) {
 				unitIndex[i] = convert(units.substring(0, 1));
 				units = units.substring(1);
 			}
-			for (int i = 0; i < unitLength; i++) {
+			for (int i = 0; i < length; i++) {
 				unitLengths[i] = convert(units.substring(0, 1));
 				units = units.substring(1);
 			}
-			for (int i = 0; i < unitLength; i++) {
+			for (int i = 0; i < length; i++) {
 				Units[i] = new Unit(unitIndex[i], convert(units.substring(0, unitLengths[i])));
 				units = units.substring(unitLengths[i]);
 			}
-			
+
 			for (int i = 0; i < idolLength; i++) {
 				idolIndex[i] = convert(idols.substring(0, 1));
 				idols = idols.substring(1);
@@ -174,7 +200,7 @@ public class Client {
 				Idols[i] = new Idol(idolIndex[i], convert(idols.substring(0, idolLengths[i])));
 				idols = idols.substring(idolLengths[i]);
 			}
-			
+
 			Game.players[1].setUnits(Units);
 			Game.players[1].setIdols(Idols);
 		}
@@ -196,5 +222,9 @@ public class Client {
 			result = (result << 8) | (c & 0xFF);
 		}
 		return result;
+	}
+
+	public void closeConnection() {
+		socket.close();
 	}
 }

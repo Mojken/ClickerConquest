@@ -9,8 +9,10 @@ public class Menu extends Panel {
 	
 
 	public Menu() {
-		BH = new ButtonHandler(this);
-		addMouseListener(BH);
+		super();
+		addMouseListener(new ButtonHandler());
+		setVisible(true);
+		initializeButtons();
 	}
 	
 	int h = 120;										// header
