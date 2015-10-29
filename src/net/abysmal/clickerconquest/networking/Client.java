@@ -150,7 +150,7 @@ public class Client {
 			for (int i = 0; i < idol.length; i++)
 				if (idol[i] != null) idols += idollevels[i];
 
-			message = "/d/" + convert(units.length() + 1) + units + idols;
+			message = "/d/" + convert(units.length()) + units + idols;
 			char[] chars = message.toCharArray();
 			byte[] bytes = new byte[chars.length];
 			for (int i = 0; i < message.length(); i++) {
@@ -164,13 +164,14 @@ public class Client {
 		if (type == 1) {
 			int length = convert(message.substring(0, 1));
 
-			String units = message.substring(1, length);
+			String units = message.substring(1, length + 1);
 			int[] unitIndex = new int[length];
 			int[] unitLengths = new int[length];
 			Unit[] Units = new Unit[4096];
 
-			String idols = message.substring(length);
+			String idols = message.substring(length + 2);
 			int idolLength = convert(idols.substring(0, 1));
+			idols = idols.substring(1);
 			int[] idolIndex = new int[idolLength];
 			int[] idolLengths = new int[idolLength];
 			Idol[] Idols = new Idol[4096];
@@ -200,7 +201,6 @@ public class Client {
 				Idols[i] = new Idol(idolIndex[i], convert(idols.substring(0, idolLengths[i])));
 				idols = idols.substring(idolLengths[i]);
 			}
-
 			Game.players[1].setUnits(Units);
 			Game.players[1].setIdols(Idols);
 		}
